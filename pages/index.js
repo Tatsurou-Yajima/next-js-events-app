@@ -1,6 +1,8 @@
 import Head from 'next/head'
+import { events_categories } from '/data/data.json'
+import Image from 'next/image'
 
-export default function Home() {
+export default function Home({ data }) {
   return (
     <div>
       <Head>
@@ -18,21 +20,11 @@ export default function Home() {
       </header>
 
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <a href=''>
-          <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-            <h2>Event In Tokyo</h2>
-          </div>
-        </a>
-        <a href=''>
-          <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-            <h2>Event In Kyoto</h2>
-          </div>
-        </a>
-        <a href=''>
-          <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-            <h2>Event In Kanagawa</h2>
-          </div>
-        </a>
+        {data.map(ev => (
+          <a key={ev.id} href={`/events/${ev.id}`}>
+            <Image width={200} height={150} alt={ev.title} src={ev.image} /> <h2>{ev.title}</h2><p>{ev.description}</p>
+          </a>
+        ))}
       </main>
 
       <footer>
@@ -40,4 +32,12 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export function getServerSideProps() {
+  return {
+    props: {
+      data: events_categories,
+    },
+  }
 }

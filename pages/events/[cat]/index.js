@@ -1,10 +1,10 @@
-const Page = () => {
+const EventsCatPage = () => {
     return <div>
-        <h1>About us</h1>
+        <h1>Events</h1>
         <a href="/event/event1">Event 1</a>
         <a href="/event/event2">Event 2</a>
         <a href="/event/event3">Event 3</a>
     </div>
 }
 
-export default Page;
+export default EventsCatPage;
