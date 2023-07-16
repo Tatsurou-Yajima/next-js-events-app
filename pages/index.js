@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Link from 'next/link'
-import Image from 'next/image'
+import { events_categories } from '/data/data.json'
+import { HomePage } from '@/components/home/home-page'
 
 export default function Home({ data }) {
   return (
@@ -10,35 +10,15 @@ export default function Home({ data }) {
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="Events App" />
       </Head>
-
-      <header>
-        <nav>
-          <Link href="/">Home</Link>
-          <Link href="/events">Events</Link>
-          <Link href="/about-us">About Us</Link>
-        </nav>
-      </header>
-
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        {data.map(ev => (
-          <Link key={ev.id} href={`/events/${ev.id}`} passHref>
-            <Image width={200} height={150} alt={ev.title} src={ev.image} /> <h2>{ev.title}</h2><p>{ev.description}</p>
-          </Link>
-        ))}
-      </main>
-
-      <footer>
-        @2023 All rights reserved
-      </footer>
+      <HomePage data={data} />
     </div>
   )
 }
 
 export function getServerSideProps() {
-  const data = import('/data/data.json')
   return {
     props: {
-      data: data.events_categories,
+      data: events_categories,
     },
   }
 }
