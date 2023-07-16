@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { events_categories } from '/data/data.json'
 import Image from 'next/image'
 
 export default function Home({ data }) {
@@ -36,9 +35,10 @@ export default function Home({ data }) {
 }
 
 export function getServerSideProps() {
+  const data = import('/data/data.json')
   return {
     props: {
-      data: events_categories,
+      data: data.events_categories,
     },
   }
 }
