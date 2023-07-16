@@ -1,4 +1,4 @@
-import { allEvents, events_categories } from '/data/data.json'
+import data from '/data/data.json'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -20,7 +20,7 @@ const EventsCatPage = ({ data, pageName }) => {
 export default EventsCatPage;
 
 export async function getStaticPaths() {
-    const allPaths = events_categories.map(ev => {
+    const allPaths = data.events_categories.map(ev => {
         return {
             params: {
                 cat: ev.id.toString(),
@@ -36,7 +36,8 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
     const id = context?.params.cat;
-    const data = allEvents.filter(ev => ev.city === id);
+    const json_data = await import('/data/data.json');
+    const data = json_data.allEvents.filter(ev => ev.city === id);
     return {
         props: { data, pageName: id }
     }
