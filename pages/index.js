@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { events_categories } from '/data/data.json'
 import Image from 'next/image'
 
@@ -13,17 +14,17 @@ export default function Home({ data }) {
 
       <header>
         <nav>
-          <a href="/">Home</a>
-          <a href="/events">Events</a>
-          <a href="/about-us">About Us</a>
+          <Link href="/">Home</Link>
+          <Link href="/events">Events</Link>
+          <Link href="/about-us">About Us</Link>
         </nav>
       </header>
 
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         {data.map(ev => (
-          <a key={ev.id} href={`/events/${ev.id}`}>
+          <Link key={ev.id} href={`/events/${ev.id}`} passHref>
             <Image width={200} height={150} alt={ev.title} src={ev.image} /> <h2>{ev.title}</h2><p>{ev.description}</p>
-          </a>
+          </Link>
         ))}
       </main>
 
