@@ -6,7 +6,7 @@ export default function EventsPage({ data }) {
     <div>
       <h1>Event page</h1>
       <div>
-        {data.map(ev => (
+        {data.map((ev) => (
           <Link key={ev.id} href={`/events/${ev.id}`} passHref>
             <Image src={ev.image} width={300} height={200} alt={ev.title} />
             <h2>{ev.title}</h2>
