@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import data from '/data/data.json'
 
 export default function EventsPage({ data }) {
   return (
@@ -18,10 +17,11 @@ export default function EventsPage({ data }) {
   )
 }
 
-export function getStaticProps() {
+export async function getStaticProps() {
+  const { events_categories } = await import('/data/data.json')
   return {
     props: {
-      data: data.events_categories
+      data: events_categories
     }
   }
 }
