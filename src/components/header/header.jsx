@@ -24,7 +24,7 @@ export const Header = () => {
                     </ul>
                 </nav>
             </div>
-            <h1>Ut enim ad minima veniam, quis nostrum exercitationem</h1>
+            <h1>Ut enim ad minima veniam</h1>
         </header>
     )
 }
