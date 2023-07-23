@@ -1,12 +1,21 @@
+ul
+    list-style: none
+
 header
     height: 300px
-    padding: 20px
     background: linear-gradient(305deg, #e0dbff,transparent)
-    display: flex
-    flex-direction: column
-    justify-content: space-between
+    padding: 15px 30px
+
+    >div
+        width: 100%
+        max-width: 1250px
+        margin: auto
+        display: flex
+        padding: 20px
+        flex-direction: column
+        justify-content: space-between
     h1
-        width: 60%
+        width: 50%
         font-size: 40px
         text-transform: uppercase
     .topNav
@@ -30,5 +39,28 @@ footer
 
 main
     width: 100%
-    max-width: 1450px
+    max-width: 1250px
     margin: auto
+    padding: 80px 30px
+    min-height: 550px
+
+.home_body
+    display: flex
+    flex-direction: column
+    gap: 50px
+    .image
+        width: 40%
+    .card
+        display: flex
+        flex-direction: row
+        gap: 30px
+        justify-content: center
+        align-content: center
+        align-items: center
+        &:nth-child(even)
+            direction: rtl
+        .content
+            width: 50%
+.about_us_list
+    display: flex
+    flex-direction: column
