@@ -1,11 +1,38 @@
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useRef } from 'react'
 import Image from 'next/image'
 
 const SingleEvent = ({ data }) => {
-    const onSubmit = (e) => {
+    const inputEmail = useRef()
+    const router = useRouter()
+
+    const onSubmit = async (e) => {
         e.preventDefault()
-        const formData = new FormData(e.target)
-        const email = formData.get('email')
+        const emailValue = inputEmail.current.value
+        const eventId = router?.query.id
+
+        try {
+            const response = await fetch(
+                '/api/email-registration',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: emailValue,
+                        eventId: eventId,
+                    })
+                }
+            )
+            if (!response.ok) {
+                throw new Error(`エラー: ${response.status}`)
+            }
+            const data = await response.json()
+            console.log(data, 'data')
+        } catch (e) {
+            console.log(e, 'error')
+        }
     }
 
     return (
@@ -16,12 +43,13 @@ const SingleEvent = ({ data }) => {
             <form onSubmit={onSubmit} className='email_registration'>
                 <label>メーリングリストに登録する</label>
                 <input
+                    ref={inputEmail}
                     type='email'
                     id='email'
                     name='email'
                     placeholder='メールアドレスを入力してください'
                 />
-                <button type='button'>Submit</button>
+                <button>登録</button>
             </form>
         </div>
     )
