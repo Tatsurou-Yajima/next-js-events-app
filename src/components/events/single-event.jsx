@@ -5,11 +5,18 @@ import Image from 'next/image'
 const SingleEvent = ({ data }) => {
     const inputEmail = useRef()
     const router = useRouter()
+    const [message, setMessage] = React.useState('')
 
     const onSubmit = async (e) => {
         e.preventDefault()
         const emailValue = inputEmail.current.value
         const eventId = router?.query.id
+
+        const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
+        if (!emailPattern.test(emailValue)) {
+            setMessage('正しいメールアドレスを入力してください')
+        }
 
         try {
             const response = await fetch(
@@ -29,9 +36,10 @@ const SingleEvent = ({ data }) => {
                 throw new Error(`エラー: ${response.status}`)
             }
             const data = await response.json()
-            console.log(data, 'data')
+            setMessage(data.message)
+            inputEmail.current.value = ''
         } catch (e) {
-            console.log(e, 'error')
+            console.log('エラー: ', e)
         }
     }
 
@@ -51,6 +59,7 @@ const SingleEvent = ({ data }) => {
                 />
                 <button>登録</button>
             </form>
+            <p>{message}</p>
         </div>
     )
 }

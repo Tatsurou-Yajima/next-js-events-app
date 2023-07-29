@@ -24,31 +24,34 @@ export default function handler(req, res) {
     if (method === 'POST') {
         const { email, eventId } = req.body
 
-        const newAllEvents = allEvents.map((event) => {
-            if (event.id === eventId) {
-                if (event.emails_registered.includes(email)) {
+        if (!email | !email.includes('@')) {
+            return res.status(422).json({
+                message: '正しいメールアドレスを入力してください'
+            })
+        }
+
+        const newAllEvents = allEvents.map((ev) => {
+            if (ev.id === eventId) {
+                if (ev.emails_registered.includes(email)) {
                     res.status(409).json({
                         message: 'このメールアドレスはすでに登錄されています'
-                    })
-                    return event
+                    });
+                    return ev;
                 }
                 return {
-                    ...event,
-                    emails_registered: [
-                        ...event.emails_registered,
-                        email,
-                    ]
-                }
+                    ...ev,
+                    emails_registered: [...ev.emails_registered, email],
+                };
             }
-            return event
-        })
+            return ev;
+        });
 
         fs.writeFileSync(filePath, JSON.stringify({
             events_categories,
             allEvents: newAllEvents
         }))
 
-        res.status(200).json({
+        res.status(201).json({
             message: `登録しました。メールアドレス: ${email} イベントID: ${eventId}`
         })
     }
